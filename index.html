@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Sushi - Margem e Vendas</title>
+    <!-- Tailwind CSS para Design Moderno -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Chart.js para os Gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans min-h-screen p-4 md:p-8">
+
+    <div class="max-w-6xl mx-auto space-y-8">
+        
+        <!-- Cabeçalho -->
+        <header class="border-b border-gray-800 pb-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div>
+                <h1 class="text-3xl font-bold text-red-500">Ketsuen Control</h1>
+                <p class="text-gray-400">Engenharia de cardápio e fluxo de lucro semanal</p>
+            </div>
+            <div class="bg-gray-800 p-3 rounded-lg border border-gray-700 text-sm">
+                <span class="text-gray-400">Status do Caixa:</span>
+                <span class="text-green-400 font-bold ml-1">Otimizado</span>
+            </div>
+        </header>
+
+        <!-- Grid Principal -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <!-- ESQUERDA (4 Colunas): Engenharia de Custos da Peça/Combo -->
+            <div class="lg:col-span-5 bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-700 space-y-6">
+                <div class="border-b border-gray-700 pb-2">
+                    <h2 class="text-xl font-semibold text-red-400">1. Custo do Combo / Porção</h2>
+                    <p class="text-xs text-gray-400 mt-0.5">Defina os gastos base para calcular o lucro das vendas</p>
+                </div>
+                
+                <form id="form-custos" class="space-y-4">
+                    <!-- Ingrediente 1: Arroz -->
+                    <div class="p-3 bg-gray-850 rounded-lg border border-gray-750">
+                        <label class="block text-sm font-medium text-gray-300 mb-1">Arroz (Shari)</label>
+                        <div class="grid grid-cols-2 gap-2">
+                            <input type="number" id="preco-arroz" placeholder="Preço Pacote 5kg" step="0.01" class="bg-gray-700 border border-gray-600 rounded p-2 text-sm focus:outline-none focus:border-red-500">
+                            <input type="number" id="g-arroz" placeholder="Gramas usadas" step="0.01" class="bg-gray-700 border border-gray-600 rounded p-2 text-sm focus:outline-none focus:border-red-500">
+                        </div>
+                    </div>
+
+                    <!-- Ingrediente 2: Peixe -->
+                    <div class="p-3 bg-gray-850 rounded-lg border border-gray-750">
+                        <label class="block text-sm font-medium text-gray-300 mb-1">Peixe (Salmão/Atum)</label>
+                        <div class="grid grid-cols-2 gap-2">
+                            <input type="number" id="preco-peixe" placeholder="Preço do kg" step="0.01" class="bg-gray-700 border border-gray-600 rounded p-2 text-sm focus:outline-none focus:border-red-500">
+                            <input type="number" id="g-peixe" placeholder="Gramas usadas" step="0.01" class="bg-gray-700 border border-gray-600 rounded p-2 text-sm focus:outline-none focus:border-red-500">
+                        </div>
+                    </div>
+
+                    <!-- Ingrediente 3: Alga e Insumos Extras -->
+                    <div class="p-3 bg-gray-850 rounded-lg border border-gray-750">
+                        <label class="block text-sm font-medium text-gray-300 mb-1">Alga, Embalagem e Extras</label>
+                        <div class="grid grid-cols-2 gap-2">
+                            <input type="number" id="preco-alga" placeholder="Preço pct alga (50f)" step="0.01" class="bg-gray-700 border border-gray-600 rounded p-2 text-sm focus:outline-none focus:border-red-500">
+                            <input type="number" id="g-alga" placeholder="Folhas/Extras usados" step="0.01" class="bg-gray-700 border border-gray-600 rounded p-2 text-sm focus:outline-none focus:border-red-500">
+                        </div>
+                    </div>
+
+                    <!-- Preço de Venda -->
+                    <div class="pt-2">
+                        <label class="block text-sm font-medium text-red-400 mb-1">Preço de Venda do Combo (R$)</label>
+                        <input type="number" id="preco-venda" placeholder="Valor cobrado ao cliente" step="0.01" class="w-full bg-gray-700 border border-gray-600 rounded p-2 text-base font-semibold text-white focus:outline-none focus:border-red-500">
+                    </div>
+
+                    <button type="button" onclick="calcularEAtualizar()" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 px-4 rounded transition duration-200 shadow-md">
+                        Salvar e Atualizar Dashboard
+                    </button>
+                </form>
+
+                <!-- Resumo Estatístico da Peça -->
+                <div id="resultado-calculo" class="hidden bg-gray-850 p-4 rounded-lg border border-gray-750 space-y-2">
+                    <div class="flex justify-between text-xs text-gray-400"><span>Custo de Fabricação:</span> <span id="res-custo" class="font-semibold text-red-400">R$ 0,00</span></div>
+                    <div class="flex justify-between text-xs text-gray-400"><span>Margem de Contribuição:</span> <span id="res-lucro" class="font-semibold text-green-400">R$ 0,00</span></div>
+                    <div class="flex justify-between text-sm font-bold border-t border-gray-700 pt-2 text-gray-200"><span>Rentabilidade por Peça:</span> <span id="res-margem" class="text-green-500">0%</span></div>
+                </div>
+            </div>
+
+            <!-- DIREITA (7 Colunas): Quantidade de Vendas e Gráfico de Lucro Líquido -->
+            <div class="lg:col-span-7 bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-700 space-y-6">
+                <div class="border-b border-gray-700 pb-2">
+                    <h2 class="text-xl font-semibold text-red-400">2. Volume de Vendas Semanal</h2>
+                    <p class="text-xs text-gray-400 mt-0.5">Insira a quantidade de combos vendidos em cada dia do expediente</p>
+                </div>
+                
+                <!-- Inputs de Quantidade de Peças Vendidas -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-2">
+                    <div class="bg-gray-850 p-2 rounded border border-gray-750 text-center">
+                        <label class="block text-xs text-gray-400 mb-1 font-medium">Seg</label>
+                        <input type="number" id="venda-seg" value="0" min="0" class="w-full bg-gray-700 border border-gray-600 rounded p-1 text-center font-bold text-sm">
+                    </div>
+                    <div class="bg-gray-850 p-2 rounded border border-gray-750 text-center">
+                        <label class="block text-xs text-gray-400 mb-1 font-medium">Ter</label>
+                        <input type="number" id="venda-ter" value="0" min="0" class="w-full bg-gray-700 border border-gray-600 rounded p-1 text-center font-bold text-sm">
+                    </div>
+                    <div class="bg-gray-850 p-2 rounded border border-gray-750 text-center">
+                        <label class="block text-xs text-gray-400 mb-1 font-medium">Qua</label>
+                        <input type="number" id="venda-qua" value="0" min="0" class="w-full bg-gray-700 border border-gray-600 rounded p-1 text-center font-bold text-sm">
+                    </div>
+                    <div class="bg-gray-850 p-2 rounded border border-gray-750 text-center">
+                        <label class="block text-xs text-gray-400 mb-1 font-medium">Qui</label>
+                        <input type="number" id="venda-qui" value="0" min="0" class="w-full bg-gray-700 border border-gray-600 rounded p-1 text-center font-bold text-sm">
+                    </div>
+                    <div class="bg-gray-850 p-2 rounded border border-gray-750 text-center">
+                        <label class="block text-xs text-gray-400 mb-1 font-medium">Sex</label>
+                        <input type="number" id="venda-sex" value="0" min="0" class="w-full bg-gray-700 border border-gray-600 rounded p-1 text-center font-bold text-sm">
+                    </div>
+                    <div class="bg-gray-850 p-2 rounded border border-gray-750 text-center">
+                        <label class="block text-xs text-gray-400 mb-1 font-medium">Sáb</label>
+                        <input type="number" id="venda-sab" value="0" min="0" class="w-full bg-gray-700 border border-gray-600 rounded p-1 text-center font-bold text-sm">
+                    </div>
+                    <div class="bg-gray-850 p-2 rounded border border-gray-750 text-center">
+                        <label class="block text-xs text-gray-400 mb-1 font-medium">Dom</label>
+                        <input type="number" id="venda-dom" value="0" min="0" class="w-full bg-gray-700 border border-gray-600 rounded p-1 text-center font-bold text-sm">
+                    </div>
+                </div>
+
+                <!-- Painel de Resultados do Gráfico -->
+                <div class="grid grid-cols-2 gap-4 bg-gray-850 p-3 rounded-lg border border-gray-750 text-center text-sm">
+                    <div>
+                        <span class="text-xs text-gray-400 block">Faturamento Total Semanal</span>
+                        <span id="total-faturamento" class="text-lg font-bold text-blue-400">R$ 0,00</span>
+                    </div>
+                    <div>
+                        <span class="text-xs text-gray-400 block">Lucro Total Acumulado</span>
+                        <span id="total-lucro-real" class="text-lg font-bold text-green-400">R$ 0,00</span>
+                    </div>
+                </div>
+
+                <!-- Gráfico de Lucro Líquido Comercial -->
+                <div class="bg-gray-850 p-4 rounded-lg border border-gray-750 h-72 relative">
+                    <canvas id="graficoFinanceiro"></canvas>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Motor Lógico do Dashboard -->
+    <script>
+        // Variáveis globais para armazenar as margens calculadas dinamicamente
+        let custoUnitarioGlobal = 0;
+        let precoVendaGlobal = 0;
+        let lucroUnitarioGlobal = 0;
+
+        // --- Configuração Inicial do Chart.js ---
+        const ctx = document.getElementById('graficoFinanceiro').getContext('2d');
+        const graficoFinanceiro = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                datasets: [
+                    {
+                        label: 'Lucro Real (R$)',
+                        data: [0, 0, 0, 0, 0, 0, 0],
+                        backgroundColor: 'rgba(34, 197, 94, 0.65)', // Verde Lucro (green-500)
+                        borderColor: 'rgba(34, 197, 94, 1)',
+                        borderWidth: 1.5,
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'Faturamento Bruto (R$)',
+                        data: [0, 0, 0, 0, 0, 0, 0],
+                        backgroundColor: 'rgba(59, 130, 246, 0.25)', // Azul Faturamento (blue-500)
+                        borderColor: 'rgba(59, 130, 246, 0.8)',
+                        borderWidth: 1.5,
+                        borderRadius: 4,
+                        type: 'line', // Transforma esse dataset em linha para comparar comportamento
+                        tension: 0.2
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: '#374151' },
+                        ticks: { color: '#9ca3af', callback: value => 'R$ ' + value }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#9ca3af' }
+                    }
+                },
+                plugins: {
+                    legend: { labels: { color: '#f3f4f6', font: { size: 11 } } }
+                }
+            }
+        });
+
+        // --- Core Lógico: Executa a Engenharia Reversa de Custos e Alimenta Graficos ---
+        function calcularEAtualizar() {
+            // 1. Captura e Processamento Matemático da Ficha Técnica
+            const pArroz = parseFloat(document.getElementById('preco-arroz').value) || 0;
+            const gArroz = parseFloat(document.getElementById('g-arroz').value) || 0;
+            const custoArroz = (pArroz / 5000) * gArroz; // Regra de 3: Base pacote 5kg
+
+            const pPeixe = parseFloat(document.getElementById('preco-peixe').value) || 0;
+            const gPeixe = parseFloat(document.getElementById('g-peixe').value) || 0;
+            const custoPeixe = (pPeixe / 1000) * gPeixe; // Regra de 3: Base peso por kg (1000g)
+
+            const pAlga = parseFloat(document.getElementById('preco-alga').value) || 0;
+            const gAlga = parseFloat(document.getElementById('g-alga').value) || 0;
+            const custoAlga = (pAlga / 50) * gAlga; // Regra de 3: Base pacote padrão com 50 folhas
+
+            precoVendaGlobal = parseFloat(document.getElementById('preco-venda').value) || 0;
+            custoUnitarioGlobal = custoArroz + custoPeixe + custoAlga;
+            lucroUnitarioGlobal = precoVendaGlobal - custoUnitarioGlobal;
+            
+            const margemLucro = precoVendaGlobal > 0 ? (lucroUnitarioGlobal / precoVendaGlobal) * 100 : 0;
+
+            // Renderiza dados analíticos da peça
+            document.getElementById('res-custo').innerText = `R$ ${custoUnitarioGlobal.toFixed(2)}`;
+            document.getElementById('res-lucro').innerText = `R$ ${lucroUnitarioGlobal.toFixed(2)}`;
+            document.getElementById('res-margem').innerText = `${margemLucro.toFixed(1)}%`;
+            document.getElementById('resultado-calculo').classList.remove('hidden');
+
+            // 2. Processamento do Módulo de Fechamento Diário
+            const dias = ['seg', 'ter', 'qua', 'qui', 'sex', 'sab', 'dom'];
+            
+            // Mapeia a quantidade de itens vendidos por dia
+            const quantidadesVendidas = dias.map(dia => parseInt(document.getElementById(`venda-${dia}`).value) || 0);
+            
+            // Multiplica volumes físicos pelos indicadores econômicos unitários
+            const faturamentosDiarios = quantidadesVendidas.map(qtd => qtd * precoVendaGlobal);
+            const lucrosDiarios = quantidadesVendidas.map(qtd => qtd * lucroUnitarioGlobal);
+
+            // Cálculos consolidados da semana inteira
+            const faturamentoTotalSemana = faturamentosDiarios.reduce((a, b) => a + b, 0);
+            const lucroTotalSemana = lucrosDiarios.reduce((a, b) => a + b, 0);
+
+            // Atualiza os displays informativos
+            document.getElementById('total-faturamento').innerText = `R$ ${faturamentoTotalSemana.toFixed(2)}`;
+            document.getElementById('total-lucro-real').innerText = `R$ ${lucroTotalSemana.toFixed(2)}`;
+
+            // Modifica as estruturas do gráfico em tempo de execução
+            graficoFinanceiro.data.datasets[0].data = lucrosDiarios;       // Barras de Lucro Real
+            graficoFinanceiro.data.datasets[1].data = faturamentosDiarios;  // Linha de Faturamento Bruto
+            graficoFinanceiro.update();
+        }
+    </script>
+</body>
+</html>
