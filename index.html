@@ -3,21 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ketsuen Control - Engenharia de Cardápio</title>
+    <title>Ketsuen Control - Gestão Avançada</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        /* Cores customizadas antifadiga para os olhos */
         :root {
-            --bg-principal: #0d0f14;      /* Preto suave */
-            --bg-card: #161a24;           /* Cinza-escuro profundo */
-            --bg-input: #212735;          /* Fundo dos campos */
-            --texto-principal: #f3f4f6;   /* Branco gelo */
-            --texto-secundario: #9ca3af;  /* Cinza claro */
-            --azul-destaque: #3b82f6;     /* Azul safira */
-            --azul-hover: #1d4ed8;        /* Azul escuro */
-            --verde-lucro: #10b981;       /* Verde suave */
-            --borda: #283044;             /* Divisórias */
+            --bg-principal: #0d0f14;      
+            --bg-card: #161a24;           
+            --bg-input: #212735;          
+            --texto-principal: #f3f4f6;   
+            --texto-secundario: #9ca3af;  
+            --azul-destaque: #3b82f6;     
+            --verde-lucro: #10b981;       
+            --borda: #283044;             
         }
         body { background-color: var(--bg-principal); color: var(--texto-principal); }
         .bg-card { background-color: var(--bg-card); border-color: var(--borda); }
@@ -26,20 +24,21 @@
         .text-azul { color: var(--azul-destaque); }
         .text-verde { color: var(--verde-lucro); }
         .border-custom { border-color: var(--borda); }
+        .tab-active { border-color: var(--azul-destaque); color: var(--azul-destaque); background-color: rgba(59, 130, 246, 0.1); }
     </style>
 </head>
-<body class="font-sans min-h-screen p-4 md:p-8">
+<body class="font-sans min-h-screen p-4 md:p-6">
 
-    <div class="max-w-6xl mx-auto space-y-6">
+    <div class="max-w-7xl mx-auto space-y-6">
         
         <header class="border-b border-custom pb-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div>
-                <h1 class="text-2xl font-bold text-azul">Ketsuen Control</h1>
-                <p class="text-sm text-secundario">Gestão de Custos Milimétrica • Arroz, Salmão, Camarão e Kani</p>
+                <h1 class="text-2xl font-bold text-azul">Ketsuen Control <span class="text-xs text-white font-normal bg-blue-600 px-2 py-0.5 rounded-full">v2.0</span></h1>
+                <p class="text-sm text-secundario">Engenharia Reversa de Insumos, Fritos, Temakis, Yakisobas e Custos Operacionais</p>
             </div>
-            <div class="bg-card border rounded-lg p-2 px-4 text-center text-xs">
-                <span class="text-secundario block">Status do Sistema</span>
-                <span class="text-verde font-bold">Ativo</span>
+            <div class="text-right text-xs bg-card border rounded-lg p-2 px-4">
+                <span class="text-secundario block">Fechamento Consolidado</span>
+                <span class="text-verde font-bold">Modo de Operação Ativo</span>
             </div>
         </header>
 
@@ -47,169 +46,179 @@
             
             <div class="lg:col-span-5 space-y-6">
                 
-                <div class="bg-card border rounded-xl p-5 shadow-lg space-y-4">
-                    <div>
-                        <h2 class="text-lg font-semibold text-azul">1. Preço dos Insumos (Atacado)</h2>
-                        <p class="text-xs text-secundario">Insira quanto paga na embalagem fechada do fornecedor</p>
-                    </div>
-                    
-                    <div class="grid grid-cols-2 gap-3 text-xs">
-                        <div>
-                            <label class="block text-secundario mb-1">Arroz Saco (5kg)</label>
-                            <input type="number" id="bruto-arroz" value="45.00" step="0.01" class="w-full bg-input border rounded p-2 text-white outline-none focus:border-blue-500">
-                        </div>
-                        <div>
-                            <label class="block text-secundario mb-1">Salmão (KG)</label>
-                            <input type="number" id="bruto-salmao" value="85.00" step="0.01" class="w-full bg-input border rounded p-2 text-white outline-none focus:border-blue-500">
-                        </div>
-                        <div>
-                            <label class="block text-secundario mb-1">Camarão (KG)</label>
-                            <input type="number" id="bruto-camarao" value="70.00" step="0.01" class="w-full bg-input border rounded p-2 text-white outline-none focus:border-blue-500">
-                        </div>
-                        <div>
-                            <label class="block text-secundario mb-1">Kani (Pacote 16st)</label>
-                            <input type="number" id="bruto-kani" value="18.00" step="0.01" class="w-full bg-input border rounded p-2 text-white outline-none focus:border-blue-500">
-                        </div>
-                        <div>
-                            <label class="block text-secundario mb-1">Alga Nori (50fl)</label>
-                            <input type="number" id="bruto-alga" value="55.00" step="0.01" class="w-full bg-input border rounded p-2 text-white outline-none focus:border-blue-500">
-                        </div>
-                        <div>
-                            <label class="block text-secundario mb-1">Cream Cheese (KG)</label>
-                            <input type="number" id="bruto-cream" value="40.00" step="0.01" class="w-full bg-input border rounded p-2 text-white outline-none focus:border-blue-500">
-                        </div>
+                <div class="bg-card border rounded-xl p-4 shadow-lg space-y-3">
+                    <h2 class="text-sm font-bold text-azul uppercase tracking-wider">1. Tabela de Insumos (Preço Bruto)</h2>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-xs">
+                        <div><label class="text-secundario block mb-1">Arroz (5kg)</label><input type="number" id="b-arroz" value="45.00" class="w-full bg-input border rounded p-1.5 text-white outline-none"></div>
+                        <div><label class="text-secundario block mb-1">Salmão (KG)</label><input type="number" id="b-salmao" value="85.00" class="w-full bg-input border rounded p-1.5 text-white outline-none"></div>
+                        <div><label class="text-secundario block mb-1">Camarão (KG)</label><input type="number" id="b-camarao" value="70.00" class="w-full bg-input border rounded p-1.5 text-white outline-none"></div>
+                        <div><label class="text-secundario block mb-1">Kani (Pct 16st)</label><input type="number" id="b-kani" value="18.00" class="w-full bg-input border rounded p-1.5 text-white outline-none"></div>
+                        <div><label class="text-secundario block mb-1">Alga (50 fl)</label><input type="number" id="b-alga" value="55.00" class="w-full bg-input border rounded p-1.5 text-white outline-none"></div>
+                        <div><label class="text-secundario block mb-1">Cream Cheese (KG)</label><input type="number" id="b-cream" value="40.00" class="w-full bg-input border rounded p-1.5 text-white outline-none"></div>
+                        <div><label class="text-secundario block mb-1">Óleo de Fritura (L)</label><input type="number" id="b-oleo" value="7.50" class="w-full bg-input border rounded p-1.5 text-white outline-none"></div>
+                        <div><label class="text-secundario block mb-1">Macarrão Yak. (KG)</label><input type="number" id="b-massa" value="14.00" class="w-full bg-input border rounded p-1.5 text-white outline-none"></div>
+                        <div><label class="text-secundario block mb-1">Verduras/Molho (KG)</label><input type="number" id="b-verdura" value="12.00" class="w-full bg-input border rounded p-1.5 text-white outline-none"></div>
                     </div>
                 </div>
 
-                <div class="bg-card border rounded-xl p-5 shadow-lg space-y-4">
-                    <div>
-                        <h2 class="text-lg font-semibold text-azul">2. Calculadora da Porção / Combo</h2>
-                        <p class="text-xs text-secundario">Monte o prato pesando cada ingrediente utilizado</p>
-                    </div>
+                <div class="bg-card border rounded-xl p-4 shadow-lg space-y-4">
+                    <h2 class="text-sm font-bold text-azul uppercase tracking-wider">2. Ficha Técnica por Categoria</h2>
                     
-                    <div class="grid grid-cols-2 gap-3 text-xs">
-                        <div>
-                            <label class="block text-secundario mb-1">Arroz Usado (g)</label>
-                            <input type="number" id="g-arroz" value="150" class="w-full bg-input border rounded p-2 text-white outline-none focus:border-blue-500">
+                    <div class="flex flex-wrap gap-1 border-b border-custom pb-2 text-xs font-semibold">
+                        <button onclick="mudarAba('aba-cru')" id="btn-aba-cru" class="px-3 py-1.5 border rounded-t-md text-secundario tab-active">Sushi Cru</button>
+                        <button onclick="mudarAba('aba-frito')" id="btn-aba-frito" class="px-3 py-1.5 border rounded-t-md text-secundario">Sushi Frito</button>
+                        <button onclick="mudarAba('aba-temaki')" id="btn-aba-temaki" class="px-3 py-1.5 border rounded-t-md text-secundario">Temakis</button>
+                        <button onclick="mudarAba('aba-yakisoba')" id="btn-aba-yakisoba" class="px-3 py-1.5 border rounded-t-md text-secundario">Yakisoba</button>
+                    </div>
+
+                    <div class="text-xs space-y-3">
+                        
+                        <div id="aba-cru" class="tab-content space-y-3">
+                            <div class="grid grid-cols-2 gap-2">
+                                <div><label class="text-secundario block mb-1">Arroz Usado (g)</label><input type="number" id="cru-arroz" value="120" class="w-full bg-input border rounded p-1.5"></div>
+                                <div><label class="text-secundario block mb-1">Salmão Usado (g)</label><input type="number" id="cru-salmao" value="80" class="w-full bg-input border rounded p-1.5"></div>
+                                <div><label class="text-secundario block mb-1">Camarão Usado (g)</label><input type="number" id="cru-camarao" value="0" class="w-full bg-input border rounded p-1.5"></div>
+                                <div><label class="text-secundario block mb-1">Kani Usado (Sticks)</label><input type="number" id="cru-kani" value="0" class="w-full bg-input border rounded p-1.5"></div>
+                                <div><label class="text-secundario block mb-1">Alga (Frações)</label><input type="number" id="cru-alga" value="1" class="w-full bg-input border rounded p-1.5"></div>
+                                <div><label class="text-secundario block mb-1">Cream Cheese (g)</label><input type="number" id="cru-cream" value="20" class="w-full bg-input border rounded p-1.5"></div>
+                            </div>
                         </div>
-                        <div>
-                            <label class="block text-secundario mb-1">Salmão Usado (g)</label>
-                            <input type="number" id="g-salmao" value="100" class="w-full bg-input border rounded p-2 text-white outline-none focus:border-blue-500">
+
+                        <div id="aba-frito" class="tab-content space-y-3 hidden">
+                            <div class="grid grid-cols-2 gap-2">
+                                <div><label class="text-secundario block mb-1">Arroz Usado (g)</label><input type="number" id="frito-arroz" value="120" class="w-full bg-input border rounded p-1.5"></div>
+                                <div><label class="text-secundario block mb-1">Salmão/Kani Usado (g)</label><input type="number" id="frito-peixe" value="60" class="w-full bg-input border rounded p-1.5"></div>
+                                <div><label class="text-secundario block mb-1">Alga (Frações)</label><input type="number" id="frito-alga" value="1" class="w-full bg-input border rounded p-1.5"></div>
+                                <div><label class="text-secundario block mb-1">Cream Cheese (g)</label><input type="number" id="frito-cream" value="20" class="w-full bg-input border rounded p-1.5"></div>
+                                <div class="col-span-2 border-t border-custom pt-2 mt-1">
+                                    <label class="text-amber-400 font-bold block mb-1">Estimativa de Óleo Absorvido por Porção (ml)</label>
+                                    <input type="number" id="frito-oleo" value="40" class="w-full bg-input border border-amber-500/40 rounded p-1.5 text-amber-400 font-semibold">
+                                </div>
+                            </div>
                         </div>
-                        <div>
-                            <label class="block text-secundario mb-1">Camarão Usado (g)</label>
-                            <input type="number" id="g-camarao" value="0" class="w-full bg-input border rounded p-2 text-white outline-none focus:border-blue-500">
+
+                        <div id="aba-temaki" class="tab-content space-y-3 hidden">
+                            <div class="grid grid-cols-2 gap-2">
+                                <div><label class="text-secundario block mb-1">Arroz Forte do Temaki (g)</label><input type="number" id="tem-arroz" value="180" class="w-full bg-input border rounded p-1.5"></div>
+                                <div><label class="text-secundario block mb-1">Salmão Recheio (g)</label><input type="number" id="tem-salmao" value="100" class="w-full bg-input border rounded p-1.5"></div>
+                                <div><label class="text-secundario block mb-1">Camarão Recheio (g)</label><input type="number" id="tem-camarao" value="0" class="w-full bg-input border rounded p-1.5"></div>
+                                <div><label class="text-secundario block mb-1">Alga Inteira (unidade)</label><input type="number" id="tem-alga" value="1" class="w-full bg-input border rounded p-1.5"></div>
+                                <div><label class="text-secundario block mb-1">Cream Cheese (g)</label><input type="number" id="tem-cream" value="30" class="w-full bg-input border rounded p-1.5"></div>
+                            </div>
                         </div>
-                        <div>
-                            <label class="block text-secundario mb-1">Kani Usado (Sticks)</label>
-                            <input type="number" id="u-kani" value="0" class="w-full bg-input border rounded p-2 text-white outline-none focus:border-blue-500">
+
+                        <div id="aba-yakisoba" class="tab-content space-y-3 hidden">
+                            <div class="grid grid-cols-2 gap-2">
+                                <div><label class="text-secundario block mb-1">Macarrão de Yakisoba (g)</label><input type="number" id="yak-massa" value="250" class="w-full bg-input border rounded p-1.5"></div>
+                                <div><label class="text-secundario block mb-1">Mix Carne / Frango (g)</label><input type="number" id="yak-carne" value="100" class="w-full bg-input border rounded p-1.5"></div>
+                                <div><label class="text-secundario block mb-1">Legumes e Molho Shoyu (g)</label><input type="number" id="yak-verdura" value="150" class="w-full bg-input border rounded p-1.5"></div>
+                            </div>
                         </div>
-                        <div>
-                            <label class="block text-secundario mb-1">Alga (Folhas/Frações)</label>
-                            <input type="number" id="u-alga" value="1" class="w-full bg-input border rounded p-2 text-white outline-none focus:border-blue-500">
-                        </div>
-                        <div>
-                            <label class="block text-secundario mb-1">Cream Cheese (g)</label>
-                            <input type="number" id="g-cream" value="30" class="w-full bg-input border rounded p-2 text-white outline-none focus:border-blue-500">
+
+                    </div>
+
+                    <div class="border-t border-custom pt-4 space-y-2.5 text-xs">
+                        <span class="font-bold text-white block">3. Embalagem, Gás e Combustível (R$ por pedido)</span>
+                        <div class="grid grid-cols-3 gap-2">
+                            <div><label class="text-secundario block mb-1">Embalagem</label><input type="number" id="op-embalagem" value="3.50" step="0.10" class="w-full bg-input border rounded p-1.5"></div>
+                            <div><label class="text-secundario block mb-1">Gás Cozinha</label><input type="number" id="op-gas" value="1.20" step="0.10" class="w-full bg-input border rounded p-1.5"></div>
+                            <div><label class="text-secundario block mb-1">Gasolina/Moto</label><input type="number" id="op-gasolina" value="5.00" step="0.50" class="w-full bg-input border rounded p-1.5"></div>
                         </div>
                     </div>
 
                     <div class="pt-2">
-                        <label class="block text-xs font-semibold text-white mb-1">Preço de Venda Praticado (R$)</label>
-                        <input type="number" id="preco-venda" value="35.00" step="0.01" class="w-full bg-input border rounded p-2 text-base font-bold text-white outline-none focus:border-blue-500">
+                        <label class="block text-xs font-semibold text-white mb-1">Preço Médio de Venda Comercial (R$)</label>
+                        <input type="number" id="preco-venda-geral" value="32.00" step="0.50" class="w-full bg-input border border-blue-500 rounded p-2 text-base font-bold text-white outline-none">
                     </div>
 
-                    <button type="button" onclick="calcularEAtualizar()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-200 text-sm shadow-md">
-                        Salvar e Atualizar Margens
+                    <button type="button" onclick="calcularTudo()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-xs transition duration-200">
+                        Processar Engenharia e Painel Semanal
                     </button>
-
-                    <div id="resultado-calculo" class="hidden border-t border-custom pt-3 space-y-1.5 text-xs">
-                        <div class="flex justify-between">
-                            <span class="text-secundario">Custo Total de Insumos:</span>
-                            <span id="res-custo" class="font-bold text-red-400">R$ 0,00</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-secundario">Lucro Bruto na Peça:</span>
-                            <span id="res-lucro" class="font-bold text-verde">R$ 0,00</span>
-                        </div>
-                        <div class="flex justify-between text-sm font-bold border-t border-custom pt-1.5 mt-1">
-                            <span>Margem de Lucro:</span>
-                            <span id="res-margem" class="text-azul">0%</span>
-                        </div>
-                    </div>
                 </div>
             </div>
 
-            <div class="lg:col-span-7 bg-card border rounded-xl p-5 shadow-lg space-y-6">
-                <div>
-                    <h2 class="text-lg font-semibold text-azul">3. Volume de Vendas Semanal</h2>
-                    <p class="text-xs text-secundario">Informe quantas porções/combos deste item foram vendidos em cada dia</p>
-                </div>
-
-                <div class="grid grid-cols-7 gap-1.5 text-center">
-                    <div class="bg-opacity-20 bg-black p-1.5 border border-custom rounded">
-                        <label class="block text-[10px] text-secundario uppercase font-bold">Seg</label>
-                        <input type="number" id="venda-seg" value="5" class="w-full bg-transparent text-center font-bold text-sm outline-none mt-1">
-                    </div>
-                    <div class="bg-opacity-20 bg-black p-1.5 border border-custom rounded">
-                        <label class="block text-[10px] text-secundario uppercase font-bold">Ter</label>
-                        <input type="number" id="venda-ter" value="8" class="w-full bg-transparent text-center font-bold text-sm outline-none mt-1">
-                    </div>
-                    <div class="bg-opacity-20 bg-black p-1.5 border border-custom rounded">
-                        <label class="block text-[10px] text-secundario uppercase font-bold">Qua</label>
-                        <input type="number" id="venda-qua" value="12" class="w-full bg-transparent text-center font-bold text-sm outline-none mt-1">
-                    </div>
-                    <div class="bg-opacity-20 bg-black p-1.5 border border-custom rounded">
-                        <label class="block text-[10px] text-secundario uppercase font-bold">Qui</label>
-                        <input type="number" id="venda-qui" value="15" class="w-full bg-transparent text-center font-bold text-sm outline-none mt-1">
-                    </div>
-                    <div class="bg-opacity-20 bg-black p-1.5 border border-custom rounded">
-                        <label class="block text-[10px] text-secundario uppercase font-bold">Sex</label>
-                        <input type="number" id="venda-sex" value="30" class="w-full bg-transparent text-center font-bold text-sm outline-none mt-1">
-                    </div>
-                    <div class="bg-opacity-20 bg-black p-1.5 border border-custom rounded">
-                        <label class="block text-[10px] text-secundario uppercase font-bold">Sáb</label>
-                        <input type="number" id="venda-sab" value="45" class="w-full bg-transparent text-center font-bold text-sm outline-none mt-1">
-                    </div>
-                    <div class="bg-opacity-20 bg-black p-1.5 border border-custom rounded">
-                        <label class="block text-[10px] text-secundario uppercase font-bold">Dom</label>
-                        <input type="number" id="venda-dom" value="35" class="w-full bg-transparent text-center font-bold text-sm outline-none mt-1">
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-2 gap-4 bg-opacity-30 bg-black p-3 rounded-lg border border-custom text-center">
+            <div class="lg:col-span-7 space-y-6">
+                
+                <div class="bg-card border rounded-xl p-4 shadow-lg space-y-4">
                     <div>
-                        <span class="text-[11px] text-secundario block mb-0.5">Faturamento Semanal</span>
-                        <span id="total-faturamento" class="text-base font-bold text-azul">R$ 0,00</span>
+                        <h2 class="text-sm font-bold text-azul uppercase tracking-wider">3. Vendas Efetuadas no Período</h2>
+                        <p class="text-xs text-secundario">Defina quantos itens da aba selecionada acima saíram por dia da semana</p>
                     </div>
-                    <div>
-                        <span class="text-[11px] text-secundario block mb-0.5">Lucro Real Guardado</span>
-                        <span id="total-lucro-real" class="text-base font-bold text-verde">R$ 0,00</span>
+
+                    <div class="grid grid-cols-7 gap-1.5 text-center">
+                        <div class="bg-black/30 p-1.5 border border-custom rounded"><label class="block text-[10px] text-secundario font-bold uppercase">Seg</label><input type="number" id="v-seg" value="8" class="w-full bg-transparent text-center font-bold text-sm outline-none mt-1"></div>
+                        <div class="bg-black/30 p-1.5 border border-custom rounded"><label class="block text-[10px] text-secundario font-bold uppercase">Ter</label><input type="number" id="v-ter" value="10" class="w-full bg-transparent text-center font-bold text-sm outline-none mt-1"></div>
+                        <div class="bg-black/30 p-1.5 border border-custom rounded"><label class="block text-[10px] text-secundario font-bold uppercase">Qua</label><input type="number" id="v-qua" value="15" class="w-full bg-transparent text-center font-bold text-sm outline-none mt-1"></div>
+                        <div class="bg-black/30 p-1.5 border border-custom rounded"><label class="block text-[10px] text-secundario font-bold uppercase">Qui</label><input type="number" id="v-qui" value="18" class="w-full bg-transparent text-center font-bold text-sm outline-none mt-1"></div>
+                        <div class="bg-black/30 p-1.5 border border-custom rounded"><label class="block text-[10px] text-secundario font-bold uppercase">Sex</label><input type="number" id="v-sex" value="35" class="w-full bg-transparent text-center font-bold text-sm outline-none mt-1"></div>
+                        <div class="bg-black/30 p-1.5 border border-custom rounded"><label class="block text-[10px] text-secundario font-bold uppercase">Sáb</label><input type="number" id="v-sab" value="50" class="w-full bg-transparent text-center font-bold text-sm outline-none mt-1"></div>
+                        <div class="bg-black/30 p-1.5 border border-custom rounded"><label class="block text-[10px] text-secundario font-bold uppercase">Dom</label><input type="number" id="v-dom" value="40" class="w-full bg-transparent text-center font-bold text-sm outline-none mt-1"></div>
                     </div>
                 </div>
 
-                <div class="h-64 relative bg-opacity-10 bg-black border border-custom p-2 rounded-lg">
-                    <canvas id="graficoFinanceiro"></canvas>
+                <div class="bg-card border rounded-xl p-4 shadow-lg space-y-3">
+                    <h2 class="text-sm font-bold text-azul uppercase tracking-wider">4. Consolidação Financeira (Lucro Líquido vs Gastos Totais)</h2>
+                    
+                    <div class="grid grid-cols-3 gap-3 text-center">
+                        <div class="bg-black/20 p-2.5 rounded border border-custom">
+                            <span class="text-[10px] uppercase text-secundario font-bold block mb-1">Média do Dia</span>
+                            <div class="text-[11px] text-red-400">Gastos: <span id="gasto-dia">R$ 0,00</span></div>
+                            <div class="text-sm font-black text-verde mt-0.5" id="lucro-dia">R$ 0,00</div>
+                        </div>
+                        <div class="bg-black/20 p-2.5 rounded border border-custom">
+                            <span class="text-[10px] uppercase text-secundario font-bold block mb-1">Total Semana</span>
+                            <div class="text-[11px] text-red-400">Gastos: <span id="gasto-semana">R$ 0,00</span></div>
+                            <div class="text-sm font-black text-verde mt-0.5" id="lucro-semana">R$ 0,00</div>
+                        </div>
+                        <div class="bg-black/20 p-2.5 rounded border border-custom">
+                            <span class="text-[10px] uppercase text-secundario font-bold block mb-1">Acumulado Mês</span>
+                            <div class="text-[11px] text-red-400">Gastos: <span id="gasto-mes">R$ 0,00</span></div>
+                            <div class="text-sm font-black text-verde mt-0.5" id="lucro-mes">R$ 0,00</div>
+                        </div>
+                    </div>
                 </div>
+
+                <div class="bg-card border rounded-xl p-4 shadow-lg">
+                    <div class="h-60 relative">
+                        <canvas id="graficoOperacional"></canvas>
+                    </div>
+                </div>
+
             </div>
-
         </div>
     </div>
 
     <script>
-        let custoUnitarioGlobal = 0;
-        let precoVendaGlobal = 0;
-        let lucroUnitarioGlobal = 0;
+        let abaAtiva = 'aba-cru';
 
-        // Configuração Inicial do Gráfico
-        const ctx = document.getElementById('graficoFinanceiro').getContext('2d');
-        const graficoFinanceiro = new Chart(ctx, {
+        // Lógica de alternação de abas visuais
+        function mudarAba(idAba) {
+            abaAtiva = idAba;
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('[id^="btn-aba-"]').forEach(el => el.classList.remove('tab-active'));
+            
+            document.getElementById(idAba).classList.remove('hidden');
+            document.getElementById('btn-' + idAba).classList.add('tab-active');
+            
+            // Reajusta os valores padrões de venda no input comercial com base na janela escolhida
+            const inputVenda = document.getElementById('preco-venda-geral');
+            if (idAba === 'aba-cru') inputVenda.value = "25.00";
+            if (idAba === 'aba-frito') inputVenda.value = "20.00";
+            if (idAba === 'aba-temaki') inputVenda.value = "28.00";
+            if (idAba === 'aba-yakisoba') inputVenda.value = "25.00";
+
+            calcularTudo();
+        }
+
+        // Setup do Chart.js com cores escuras antifadiga
+        const ctx = document.getElementById('graficoOperacional').getContext('2d');
+        const graficoOperacional = new Chart(ctx, {
             type: 'bar',
             data: {
                 labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
                 datasets: [
                     {
-                        label: 'Lucro Real (R$)',
+                        label: 'Lucro Líquido Real (R$)',
                         data: [0, 0, 0, 0, 0, 0, 0],
                         backgroundColor: '#10b981',
                         borderColor: '#10b981',
@@ -217,13 +226,13 @@
                         borderRadius: 3
                     },
                     {
-                        label: 'Faturamento Bruto (R$)',
+                        label: 'Gastos Totais (Insumo+Op)',
                         data: [0, 0, 0, 0, 0, 0, 0],
-                        backgroundColor: 'rgba(59, 130, 246, 0.15)',
-                        borderColor: '#3b82f6',
-                        borderWidth: 2,
+                        backgroundColor: 'rgba(239, 68, 68, 0.2)',
+                        borderColor: '#ef4444',
+                        borderWidth: 1.5,
                         type: 'line',
-                        tension: 0.15
+                        tension: 0.1
                     }
                 ]
             },
@@ -238,66 +247,116 @@
             }
         });
 
-        // Motor Matemático do Sistema
-        function calcularEAtualizar() {
-            // Valores de compra brutos
-            const bArroz = parseFloat(document.getElementById('bruto-arroz').value) || 0;
-            const bSalmao = parseFloat(document.getElementById('bruto-salmao').value) || 0;
-            const bCamarao = parseFloat(document.getElementById('bruto-camarao').value) || 0;
-            const bKani = parseFloat(document.getElementById('bruto-kani').value) || 0;
-            const bAlga = parseFloat(document.getElementById('bruto-alga').value) || 0;
-            const bCream = parseFloat(document.getElementById('bruto-cream').value) || 0;
+        function calcularTudo() {
+            // 1. Carrega os preços de custo do banco de dados (Atacado)
+            const pArroz = parseFloat(document.getElementById('b-arroz').value) || 0;
+            const pSalmao = parseFloat(document.getElementById('b-salmao').value) || 0;
+            const pCamarao = parseFloat(document.getElementById('b-camarao').value) || 0;
+            const pKani = parseFloat(document.getElementById('b-kani').value) || 0;
+            const pAlga = parseFloat(document.getElementById('b-alga').value) || 0;
+            const pCream = parseFloat(document.getElementById('b-cream').value) || 0;
+            const pOleo = parseFloat(document.getElementById('b-oleo').value) || 0;
+            const pMassa = parseFloat(document.getElementById('b-massa').value) || 0;
+            const pVerdura = parseFloat(document.getElementById('b-verdura').value) || 0;
 
-            // Quantidades de receita fracionadas
-            const gArroz = parseFloat(document.getElementById('g-arroz').value) || 0;
-            const gSalmao = parseFloat(document.getElementById('g-salmao').value) || 0;
-            const gCamarao = parseFloat(document.getElementById('g-camarao').value) || 0;
-            const uKani = parseFloat(document.getElementById('u-kani').value) || 0;
-            const uAlga = parseFloat(document.getElementById('u-alga').value) || 0;
-            const gCream = parseFloat(document.getElementById('g-cream').value) || 0;
+            // Gastos operacionais por pedido
+            const opEmbalagem = parseFloat(document.getElementById('op-embalagem').value) || 0;
+            const opGas = parseFloat(document.getElementById('op-gas').value) || 0;
+            const opGasolina = parseFloat(document.getElementById('op-gasolina').value) || 0;
+            const custoFixoPorUnidade = opEmbalagem + opGas + opGasolina;
 
-            // Proporção matemática individual por ingrediente
-            const cArroz = (bArroz / 5000) * gArroz;     
-            const cSalmao = (bSalmao / 1000) * gSalmao;  
-            const cCamarao = (bCamarao / 1000) * gCamarao;
-            const cKani = (bKani / 16) * uKani;          
-            const cAlga = (bAlga / 50) * uAlga;          
-            const cCream = (bCream / 1000) * gCream;     
+            let custoDeInsumosUnitario = 0;
 
-            // Totalização
-            custoUnitarioGlobal = cArroz + cSalmao + cCamarao + cKani + cAlga + cCream;
-            precoVendaGlobal = parseFloat(document.getElementById('preco-venda').value) || 0;
-            lucroUnitarioGlobal = precoVendaGlobal - custoUnitarioGlobal;
-            const margemPct = precoVendaGlobal > 0 ? (lucroUnitarioGlobal / precoVendaGlobal) * 100 : 0;
+            // 2. Cálculo do Custo de acordo com a Janela (Aba) Selecionada
+            if (abaAtiva === 'aba-cru') {
+                const gArroz = parseFloat(document.getElementById('cru-arroz').value) || 0;
+                const gSalmao = parseFloat(document.getElementById('cru-salmao').value) || 0;
+                const gCamarao = parseFloat(document.getElementById('cru-camarao').value) || 0;
+                const uKani = parseFloat(document.getElementById('cru-kani').value) || 0;
+                const uAlga = parseFloat(document.getElementById('cru-alga').value) || 0;
+                const gCream = parseFloat(document.getElementById('cru-cream').value) || 0;
 
-            // Atualização da Ficha Técnica na tela
-            document.getElementById('res-custo').innerText = `R$ ${custoUnitarioGlobal.toFixed(2)}`;
-            document.getElementById('res-lucro').innerText = `R$ ${lucroUnitarioGlobal.toFixed(2)}`;
-            document.getElementById('res-margem').innerText = `${margemPct.toFixed(1)}%`;
-            document.getElementById('resultado-calculo').classList.remove('hidden');
+                custoDeInsumosUnitario = ((pArroz / 5000) * gArroz) + ((pSalmao / 1000) * gSalmao) + 
+                                         ((pCamarao / 1000) * gCamarao) + ((pKani / 16) * uKani) + 
+                                         ((pAlga / 50) * uAlga) + ((pCream / 1000) * gCream);
+            } 
+            else if (abaAtiva === 'aba-frito') {
+                const gArroz = parseFloat(document.getElementById('frito-arroz').value) || 0;
+                const gPeixe = parseFloat(document.getElementById('frito-peixe').value) || 0;
+                const uAlga = parseFloat(document.getElementById('frito-alga').value) || 0;
+                const gCream = parseFloat(document.getElementById('frito-cream').value) || 0;
+                const mlOleo = parseFloat(document.getElementById('frito-oleo').value) || 0; // Gasto do Óleo
 
-            // Mapeamento das Vendas Diárias
+                custoDeInsumosUnitario = ((pArroz / 5000) * gArroz) + ((pSalmao / 1000) * gPeixe) + 
+                                         ((pAlga / 50) * uAlga) + ((pCream / 1000) * gCream) + 
+                                         ((pOleo / 1000) * mlOleo);
+            } 
+            else if (abaAtiva === 'aba-temaki') {
+                const gArroz = parseFloat(document.getElementById('tem-arroz').value) || 0;
+                const gSalmao = parseFloat(document.getElementById('tem-salmao').value) || 0;
+                const gCamarao = parseFloat(document.getElementById('tem-camarao').value) || 0;
+                const uAlga = parseFloat(document.getElementById('tem-alga').value) || 0;
+                const gCream = parseFloat(document.getElementById('tem-cream').value) || 0;
+
+                custoDeInsumosUnitario = ((pArroz / 5000) * gArroz) + ((pSalmao / 1000) * gSalmao) + 
+                                         ((pCamarao / 1000) * gCamarao) + ((pAlga / 50) * uAlga) + 
+                                         ((pCream / 1000) * gCream);
+            } 
+            else if (abaAtiva === 'aba-yakisoba') {
+                const gMassa = parseFloat(document.getElementById('yak-massa').value) || 0;
+                const gCarne = parseFloat(document.getElementById('yak-carne').value) || 0;
+                const gVerdura = parseFloat(document.getElementById('yak-verdura').value) || 0;
+
+                custoDeInsumosUnitario = ((pMassa / 1000) * gMassa) + ((pSalmao / 1000) * gCarne) + 
+                                         ((pVerdura / 1000) * gVerdura); // Usando preço base de carne alinhado
+            }
+
+            // Custo Total por Item = Insumo Próprio + Gastos Operacionais Gerais
+            const custoTotalPorPeca = custoDeInsumosUnitario + custoFixoPorUnidade;
+            const precoVendaItem = parseFloat(document.getElementById('preco-venda-geral').value) || 0;
+            const lucroLiquidoPorPeca = precoVendaItem - custoTotalPorPeca;
+
+            // 3. Processamento dos Dias de Venda da Semana
             const dias = ['seg', 'ter', 'qua', 'qui', 'sex', 'sab', 'dom'];
-            const quantidades = dias.map(dia => parseInt(document.getElementById(`venda-${dia}`).value) || 0);
+            const quantidades = dias.map(dia => parseInt(document.getElementById(`v-${dia}`).value) || 0);
 
-            const faturamentosDiarios = quantidades.map(q => q * precoVendaGlobal);
-            const lucrosDiarios = quantidades.map(q => q * lucroUnitarioGlobal);
+            const gastosDiarios = quantidades.map(q => q * custoTotalPorPeca);
+            const lucrosDiarios = quantidades.map(q => q * lucroLiquidoPorPeca);
 
-            const totalFaturamento = faturamentosDiarios.reduce((a, b) => a + b, 0);
-            const totalLucroReal = lucrosDiarios.reduce((a, b) => a + b, 0);
+            // Consolidações Semanais
+            const totalGastoSemana = gastosDiarios.reduce((a, b) => a + b, 0);
+            const totalLucroSemana = lucrosDiarios.reduce((a, b) => a + b, 0);
+            const totalVendasSemana = quantidades.reduce((a, b) => a + b, 0);
 
-            // Injeção de valores nos displays do Dashboard
-            document.getElementById('total-faturamento').innerText = `R$ ${totalFaturamento.toFixed(2)}`;
-            document.getElementById('total-lucro-real').innerText = `R$ ${totalLucroReal.toFixed(2)}`;
+            // Média Diária (baseado nos dias com venda maior que zero)
+            const diasAtivos = quantidades.filter(q => q > 0).length || 1;
+            const gastoMedioDia = totalGastoSemana / diasAtivos;
+            const lucroMedioDia = totalLucroSemana / diasAtivos;
 
-            // Atualização dos eixos do gráfico Chart.js
-            graficoFinanceiro.data.datasets[0].data = lucrosDiarios;
-            graficoFinanceiro.data.datasets[1].data = faturamentosDiarios;
-            graficoFinanceiro.update();
+            // Projeção Mensal (Fórmula de Escala Comercial: Semana x 4.33 semanas padrão por mês)
+            const totalGastoMes = totalGastoSemana * 4.33;
+            const totalLucroMes = totalLucroSemana * 4.33;
+
+            // 4. Injeta os resultados consolidados nas tabelas e cards do HTML
+            document.getElementById('gasto-dia').innerText = `R$ ${gastoMedioDia.toFixed(2)}`;
+            document.getElementById('lucro-dia').innerText = `R$ ${lucroMedioDia.toFixed(2)}`;
+            
+            document.getElementById('gasto-semana').innerText = `R$ ${totalGastoSemana.toFixed(2)}`;
+            document.getElementById('lucro-semana').innerText = `R$ ${totalLucroSemana.toFixed(2)}`;
+            
+            document.getElementById('gasto-mes').innerText = `R$ ${totalGastoMes.toFixed(2)}`;
+            document.getElementById('lucro-mes').innerText = `R$ ${totalLucroMes.toFixed(2)}`;
+
+            // Atualiza os dados de barras e linhas do gráfico
+            graficoOperacional.data.datasets[0].data = lucrosDiarios;
+            graficoOperacional.data.datasets[1].data = gastosDiarios;
+            graficoOperacional.update();
         }
 
-        // Executa automaticamente a matemática assim que abrir a tela
-        window.onload = calcularEAtualizar;
+        // Carrega o cálculo na primeira abertura de tela
+        window.onload = function() {
+            calcularTudo();
+        };
     </script>
 </body>
 </html>
