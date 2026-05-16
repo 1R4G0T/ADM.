@@ -1,0 +1,235 @@
+/* --- PALETA DE CORES E CONFIGURAÇÕES GERAIS --- */
+:root {
+    --bg-principal: #12141c;      /* Preto suave (não 100% escuro) */
+    --bg-card: #1e2230;           /* Cinza-escuro para os blocos */
+    --bg-input: #292f42;          /* Fundo dos campos de texto */
+    --texto-principal: #f1f3f9;   /* Branco fosco/gelo para não ofuscar */
+    --texto-secundario: #a0aec0;  /* Cinza claro para descrições */
+    --azul-destaque: #3b82f6;     /* Azul moderno para botões e links */
+    --azul-hover: #2563eb;        /* Azul um pouco mais escuro para o efeito de passar o mouse */
+    --verde-lucro: #10b981;       /* Verde suave para os indicadores de lucro */
+    --borda: #2d354b;             /* Cor das divisórias e bordas */
+}
+
+/* Reset básico para limpar as configurações do navegador */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--bg-principal);
+    color: var(--texto-principal);
+    padding: 2rem 1rem;
+    line-height: 1.5;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* --- CABEÇALHO --- */
+header {
+    border-b: 1px solid var(--borda);
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+header h1 {
+    color: var(--azul-destaque);
+    font-size: 2rem;
+}
+
+header p {
+    color: var(--texto-secundario);
+    font-size: 0.9rem;
+}
+
+/* --- ESTRUTURA DE GRIDS (LADO A LADO) --- */
+.grid-principal {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+@media (min-width: 992px) {
+    .grid-principal {
+        grid-template-columns: 5fr 7fr; /* Esquerda menor, direita maior */
+    }
+}
+
+/* --- CARDS (BLOCOS DE CONTEÚDO) --- */
+.card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--borda);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.card h2 {
+    color: var(--azul-destaque);
+    font-size: 1.25rem;
+    margin-bottom: 0.25rem;
+}
+
+.card-subtitulo {
+    color: var(--texto-secundario);
+    font-size: 0.8rem;
+    margin-bottom: 1.5rem;
+}
+
+/* --- FORMULÁRIOS E INPUTS --- */
+.grupo-input {
+    background-color: rgba(0, 0, 0, 0.15);
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.grupo-input label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--texto-principal);
+}
+
+.inputs-lado-a-lado {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+}
+
+input[type="number"] {
+    width: 100%;
+    background-color: var(--bg-input);
+    border: 1px solid var(--borda);
+    color: var(--texto-principal);
+    padding: 0.6rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+input[type="number"]:focus {
+    border-color: var(--azul-destaque);
+}
+
+/* --- BOTÕES --- */
+.btn-principal {
+    width: 100%;
+    background-color: var(--azul-destaque);
+    color: #ffffff;
+    border: none;
+    padding: 0.8rem;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-top: 0.5rem;
+}
+
+.btn-principal:hover {
+    background-color: var(--azul-hover);
+}
+
+/* --- DISPLAY DE RESULTADOS DA PEÇA --- */
+.resultado-peca {
+    margin-top: 1.5rem;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 1rem;
+    border: 1px solid var(--borda);
+}
+
+.linha-resultado {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+}
+
+.linha-resultado:last-child {
+    margin-bottom: 0;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--borda);
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.txt-verde { color: var(--verde-lucro); }
+.txt-azul { color: var(--azul-destaque); }
+
+/* --- GRID DE DIAS DA SEMANA --- */
+.grid-semana {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.dia-caixa {
+    background-color: rgba(0, 0, 0, 0.15);
+    border: 1px solid var(--borda);
+    border-radius: 6px;
+    padding: 0.5rem;
+    text-align: center;
+}
+
+.dia-caixa label {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--texto-secundario);
+    margin-bottom: 0.25rem;
+}
+
+.dia-caixa input {
+    text-align: center;
+    font-weight: bold;
+}
+
+/* --- PAINEL DE TOTAIS --- */
+.painel-totais {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--borda);
+    text-align: center;
+}
+
+.painel-totais span:first-child {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--texto-secundario);
+}
+
+.painel-totais span:last-child {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+/* --- ÁREA DO GRÁFICO --- */
+.container-grafico {
+    position: relative;
+    height: 280px;
+    margin-top: 1.5rem;
+    background-color: rgba(0, 0, 0, 0.15);
+    border: 1px solid var(--borda);
+    padding: 1rem;
+    border-radius: 8px;
+}
